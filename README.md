@@ -2,7 +2,7 @@
 
 A vertical drawer for Ionic
 
-## Here be dragons
+## Danger, here be dragons
 
 Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Installation via `bower`, make the drawer follow the drag position, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
 
@@ -37,12 +37,12 @@ Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `
 ### Example
 
 ```
-	<ion-drawer-vertical-wrapper class="has-header has-footer">
-		<ion-drawer-vertical-content>
-			<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
-		</ion-drawer-vertical-content>
-		<ion-drawer-vertical-handle direction="down" state="closed" />
-	</ion-drawer-vertical-wrapper>
+<ion-drawer-vertical-wrapper class="has-header has-footer">
+	<ion-drawer-vertical-content>
+		<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
+	</ion-drawer-vertical-content>
+	<ion-drawer-vertical-handle direction="down" state="closed" />
+</ion-drawer-vertical-wrapper>
 ```
 
 ### Events and Functions
@@ -53,7 +53,7 @@ The functions `openDrawer()`, `closeDrawer()` and `toggleDrawer()` are exposed i
 
 ## Acknowledgements
 
-[`ionic-contrib-drawer`](https://github.com/driftyco/ionic-ion-drawer) which formed a good starting point for `ion-drawer-vertical`.
+[`ionic-contrib-drawer`](https://github.com/driftyco/ionic-ion-drawer) has been a source of inspiration / a starting point for `ion-drawer-vertical`.
 
 ## License
 
