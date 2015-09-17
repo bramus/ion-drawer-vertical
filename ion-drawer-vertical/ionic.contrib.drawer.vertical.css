@@ -37,16 +37,21 @@ ion-drawer-vertical-wrapper.up.has-footer {
 	bottom: 44px;
 }
 
-ion-drawer-vertical-wrapper.up.has-subheader {
-	top: 88px;
+ion-drawer-vertical-wrapper.up.has-subfooter {
+	bottom: 88px;
 }
 
-ion-drawer-vertical-wrapper.up.has-tabs-top {
-	top: 93px;
+ion-drawer-vertical-wrapper.up.has-tabs, ion-drawer-vertical-wrapper.up.bar-footer.has-tabs {
+	bottom: 49px;
 }
 
-ion-drawer-vertical-wrapper.up.has-header.has-subheader.has-tabs-top {
-	top: 137px;
+ion-drawer-vertical-wrapper.up.has-tabs.pane, .bar-footer.has-tabs.pane {
+	bottom: 49px;
+	height: auto;
+}
+
+ion-drawer-vertical-wrapper.up.has-footer.has-tabs {
+	bottom: 93px;
 }
 
 ion-drawer-vertical-wrapper.up ion-drawer-vertical-handle {
@@ -63,23 +68,20 @@ ion-drawer-vertical-wrapper.down/*.closed*/ {
 	transform: translate3d(0, -100%, 0);
 }
 
-ion-drawer-vertical-wrapper.down.has-footer {
+ion-drawer-vertical-wrapper.down.has-header {
 	top: 44px;
 }
 
-ion-drawer-vertical-wrapper.down.has-subfooter {
-	bottom: 88px; }
-
-ion-drawer-vertical-wrapper.down.has-tabs, ion-drawer-vertical-wrapper.down.bar-footer.has-tabs {
-	bottom: 49px;
-}
-ion-drawer-vertical-wrapper.down.has-tabs.pane, ion-drawer-vertical-wrapper.down.bar-footer.has-tabs.pane {
-	bottom: 49px;
-	height: auto;
+ion-drawer-vertical-wrapper.down.has-subheader {
+	top: 88px;
 }
 
-ion-drawer-vertical-wrapper.down.has-footer.has-tabs {
-	bottom: 93px;
+ion-drawer-vertical-wrapper.down.has-tabs-top {
+	top: 93px;
+}
+
+ion-drawer-vertical-wrapper.down.has-header.has-subheader.has-tabs-top {
+	top: 137px;
 }
 
 ion-drawer-vertical-wrapper.opened {
