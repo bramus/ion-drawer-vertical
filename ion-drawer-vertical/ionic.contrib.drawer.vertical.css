@@ -1,0 +1,92 @@
+ion-drawer-vertical-wrapper {
+	display: block;
+	position: fixed;
+	left: 0;
+	right: 0;
+	height: 200px;
+	outline: 1px solid #666;
+	box-shadow: 0 0 10px #333;
+	z-index: 8; /* the ion-header-bar is 9, so we need to stay below that */
+	background: #e3e3e3;
+}
+
+ion-drawer-vertical-handle {
+	display: block;
+	position: absolute;
+	left: 42%;
+	right: 42%;
+	bottom: 0;
+	height: 24px;
+	background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAADDElEQVR4Xu2aMW4UURQE309JLRIC7oATIudEnIgIyTERMQkBN+AMFidACHEDjrBj+QhT0p+gu1Zytj3ari49J7PGTzWBVd3e8qMA5RIogAKUEyiv7wVQgHIC5fW9AApQTqC8vhdAAcoJlNf3AihAOYHy+l4ABSgnUF7fC6AA5QTK63sBFKCcQHl9L4AClBMor+8FUIByAuX1vQAKUE6gvL4XQAHKCZTX9wIoQDmB8vpeAAUoJ1Be3wugAOUEyut7ARSgnEB5fS+AApQTKK/vBVCAcgLl9b0AClBOoLy+F0ABygmU1/cCKEA5gfL6XgAFKCdQXv+qC3A3M+/KWZ+t/29m/p4Nnf3+VQJ8WGv9PPvjmr+/1nq83W6fdjNQgN2E4fPTBHg9M+8hi9bYn5n5vbv8VRdgdw+fDwkoAASXElOAlCVhDwWA4FJiCpCyJOyhABBcSkwBUpaEPRQAgkuJKUDKkrCHAkBwKTEFSFkS9lAACC4lpgApS8IeCgDBpcQUIGVJ2OMqAe7XWp/hb6yMHcfxY2a+7y5/lQC+EnZyybQ3gh7WWt9OMqj++nEcX2fmy24IV12A3T18PiSgABBcSkwBUpaEPRQAgkuJKUDKkrCHAkBwKTEFSFkS9lAACC4lpgApS8IeCgDBpcQUIGVJ2EMBILiUmAKkLAl7KAAElxJTgJQlYY+rBHg1M2/gb2yN/Z+Zl7+tn6sE8I2gkzOmvRGkAOUCvJ2ZjycZtH/918w87YZw1b+A3T18PiSgABBcSkwBUpaEPRQAgkuJKUDKkrCHAkBwKTEFSFkS9lAACC4lpgApS8IeCgDBpcQUIGVJ2EMBILiUmAKkLAl7KAAElxJTgJQlYQ8FgOBSYgqQsiTsoQAQXEpMAVKWhD0UAIJLiSlAypKwhwJAcCkxBUhZEvZQAAguJaYAKUvCHgoAwaXEFCBlSdhDASC4lJgCpCwJeygABJcSU4CUJWEPBYDgUmIKkLIk7KEAEFxKTAFSloQ9FACCS4kpQMqSsIcCQHApMQVIWRL2UAAILiX2DO72K4EnoMOWAAAAAElFTkSuQmCC') 50% 50% no-repeat;
+	/* @note: icon from https://www.iconfinder.com/icons/296823/list_menu_icon#size=128 */
+	background-size: contain;
+	-webkit-transform: translate3d(0, 100%, 0);
+	transform: translate3d(0, 100%, 0);
+	-webkit-transition: background 0.4s ease-in-out;
+	transition: background 0.4s ease-in-out;
+}
+
+ion-drawer-vertical-wrapper.up/*.closed*/ {
+	top: auto;
+	bottom: 0;
+	-webkit-transform: translate3d(0, 100%, 0);
+	transform: translate3d(0, 100%, 0);
+}
+
+ion-drawer-vertical-wrapper.up.has-footer {
+	bottom: 44px;
+}
+
+ion-drawer-vertical-wrapper.up.has-subheader {
+	top: 88px;
+}
+
+ion-drawer-vertical-wrapper.up.has-tabs-top {
+	top: 93px;
+}
+
+ion-drawer-vertical-wrapper.up.has-header.has-subheader.has-tabs-top {
+	top: 137px;
+}
+
+ion-drawer-vertical-wrapper.up ion-drawer-vertical-handle {
+	bottom: auto;
+	top: 0;
+	-webkit-transform: translate3d(0, -100%, 0);
+	transform: translate3d(0, -100%, 0);
+}
+
+ion-drawer-vertical-wrapper.down/*.closed*/ {
+	top: 0;
+	bottom: auto;
+	-webkit-transform: translate3d(0, -100%, 0);
+	transform: translate3d(0, -100%, 0);
+}
+
+ion-drawer-vertical-wrapper.down.has-footer {
+	top: 44px;
+}
+
+ion-drawer-vertical-wrapper.down.has-subfooter {
+	bottom: 88px; }
+
+ion-drawer-vertical-wrapper.down.has-tabs, ion-drawer-vertical-wrapper.down.bar-footer.has-tabs {
+	bottom: 49px;
+}
+ion-drawer-vertical-wrapper.down.has-tabs.pane, ion-drawer-vertical-wrapper.down.bar-footer.has-tabs.pane {
+	bottom: 49px;
+	height: auto;
+}
+
+ion-drawer-vertical-wrapper.down.has-footer.has-tabs {
+	bottom: 93px;
+}
+
+ion-drawer-vertical-wrapper.opened {
+	transform: translate3d(0, 0, 0);
+}
+
+ion-drawer-vertical-wrapper.animate {
+	-webkit-transition: -webkit-transform 0.4s ease-in-out;
+	transition: transform 0.4s ease-in-out;
+}
