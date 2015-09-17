@@ -4,7 +4,7 @@ A vertical drawer for Ionic
 
 ## Danger, here be dragons
 
-Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Installation via `bower`, make the drawer follow the drag position, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
+Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Make the drawer follow the drag position, enforce the proper elements being present, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
 
 ## Installation
 

@@ -8,7 +8,7 @@
 	"description": "A vertical drawer for Ionic",
 	"main": [
 		"ion-drawer-vertical/ionic.contrib.drawer.vertical.js",
-		"ion-drawer-vertical/ionic.contrib.drawer.vertical.css",
+		"ion-drawer-vertical/ionic.contrib.drawer.vertical.css"
 	],
 	"keywords": [
 		"ionic",
