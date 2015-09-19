@@ -4,7 +4,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVerticalHandle', function($element, $attrs, $ionicGesture, $timeout) {
+	.controller('$ionDrawerVerticalHandle', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalHandleDelegate) {
 
 		// We need closure
 		var self = this;
@@ -28,10 +28,20 @@
 		// Persist the state and direction on the wrapper
 		// (needed for animations)
 		var $wrapper = $element.parent('ion-drawer-vertical-wrapper');
-	    $wrapper.addClass(state);
-	    $wrapper.addClass(direction);
+		$wrapper.addClass(state);
+		$wrapper.addClass(direction);
 
-	    // Open the drawer
+		// Delegate Stuff
+		var deregisterInstance = $ionDrawerVerticalHandleDelegate._registerInstance(
+			self, $attrs.delegateHandle, function() {
+				return $ionicHistory.isActiveScope($scope);
+			}
+		);
+		$scope.$on('$destroy', function() {
+			deregisterInstance();
+		});
+
+		// Open the drawer
 		var open = function() {
 			if (!this.isOpen() || isBusyAnimating) {
 				isBusyAnimating = true;
