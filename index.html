@@ -33,7 +33,7 @@
 	</script>
 
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-controller="demo">
 	<ion-header-bar class="bar-positive">
 		<h1 class="title">ion-drawer-vertical</h1>
 		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
@@ -46,7 +46,7 @@
 		<ion-drawer-vertical-handle direction="down" state="opened" />
 	</ion-drawer-vertical-wrapper>
 
-	<ion-content ng-controller="demo" scroll="true">
+	<ion-content scroll="true">
 
 		<ion-list can-swipe>
 			<ion-item ng-repeat="item in items">
