@@ -155,3 +155,16 @@
 
 
 })();
+
+(function() {
+
+	angular.module('ionic.contrib.drawer.vertical')
+
+	.service('$ionDrawerVerticalHandleDelegate', ionic.DelegateService([
+		'openDrawer',
+		'closeDrawer',
+		'toggleDrawer'
+	]));
+
+
+})();

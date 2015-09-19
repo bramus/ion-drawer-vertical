@@ -17,12 +17,16 @@
 	<script>
 		angular
 		.module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
-		.controller('demo', function($scope) {
+		.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
 
 			// Create a list of 50 items
 			$scope.items = [];
 			for (var i = 0; i < 50; i++) {
 				$scope.items.push(i+1);
+			}
+
+			$scope.toggleDrawer = function() {
+				$ionDrawerVerticalHandleDelegate.toggleDrawer();
 			}
 
 		});
@@ -32,6 +36,7 @@
 <body ng-app="app">
 	<ion-header-bar class="bar-positive">
 		<h1 class="title">ion-drawer-vertical</h1>
+		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
 	</ion-header-bar>
 
 	<ion-drawer-vertical-wrapper class="has-header has-footer">
