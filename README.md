@@ -74,7 +74,7 @@ angular
 ```
 
 ```
-<body ng-app="app">
+<body ng-app="app" ng-controller="demo">
 	<ion-header-bar class="bar-positive">
 		<h1 class="title">ion-drawer-vertical</h1>
 		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
@@ -89,28 +89,39 @@ angular
 </body>
 ```
 
-_(Not working yet)_ When having multiple instances of `ion-drawer-vertical`, use the `$getByHandle` method along with the `delegate-handle` attribute to control a specific/single instance of `ion-drawer-vertical`:
+When having multiple instances of `ion-drawer-vertical`, use the `$getByHandle` method along with the `delegate-handle` attribute to control a specific/single instance of `ion-drawer-vertical`:
 ```
-<body ng-app="app">
+<body ng-app="app" ng-controller="demo">
 	<ion-header-bar class="bar-positive">
+		<button class="button" ng-click="toggleDrawer('first')">Toggle First</button>
 		<h1 class="title">ion-drawer-vertical</h1>
-		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
+		<button class="button" ng-click="toggleDrawer('second')">Toggle Second</button>
 	</ion-header-bar>
 	<ion-drawer-vertical-wrapper class="has-header">
 		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
 		<ion-drawer-vertical-handle direction="down" state="closed" delegate-handle="first" />
 	</ion-drawer-vertical-wrapper>
-	<ion-drawer-vertical-wrapper class="has-header">
+	<ion-drawer-vertical-wrapper class="has-footer">
 		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
 		<ion-drawer-vertical-handle direction="up" state="closed" delegate-handle="second" />
 	</ion-drawer-vertical-wrapper>
 	<ion-content>
 		[...]
 	</ion-content>
+	<ion-footer-bar class="bar-positive">
+	</ion-footer-bar>
 </body>
 ```
 ```
-$ionDrawerVerticalHandleDelegate.$getByHandle('first').toggleDrawer();
+angular
+.module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
+.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
+
+	$scope.toggleDrawer = function(handle) {
+		$ionDrawerVerticalHandleDelegate.$getByHandle(handle).toggleDrawer();
+	}
+
+});
 ```
 
 
