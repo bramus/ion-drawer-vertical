@@ -49,17 +49,8 @@ Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `
 
 `ion-drawer-vertical` automatically binds `dragup` and `dragdown` events to the `<ion-drawer-vertical-handle>` element. Dragging said element will alter the opened/closed state of the drawer.
 
-The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are exposed into the `$scope` of the directive itself if one wants to manually call these on the `ion-drawer-handle`.
 
-```
-<ion-drawer-vertical-handle direction="down" state="closed" ng-click="toggleDrawer()" />
-```
-
-### Delegate
-
-`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalHandleDelegate`.
-
-The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are available on this delegate. Calling them will control `ion-drawer-vertical` instances:
+`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalHandleDelegate`. The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are expose via this delegate. Calling them will control all `ion-drawer-vertical` instances:
 
 ```
 angular
