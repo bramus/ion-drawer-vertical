@@ -144,22 +144,7 @@
 	.directive('ionDrawerVerticalHandle', function() {
 		return {
 			restrict: 'E',
-			controller: '$ionDrawerVerticalHandle',
-			link: function($scope, $element, $attr, ctrl) {
-
-				$scope.openDrawer = function() {
-					ctrl.open();
-				};
-
-				$scope.closeDrawer = function() {
-					ctrl.close();
-				};
-
-				$scope.toggleDrawer = function() {
-					ctrl.toggle();
-				};
-
-			}
+			controller: '$ionDrawerVerticalHandle'
 		}
 	});
 
