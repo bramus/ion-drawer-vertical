@@ -4,7 +4,7 @@ A vertical drawer for Ionic
 
 ## Danger, here be dragons
 
-Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Make the drawer follow the drag position, enforce the proper elements being present, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
+Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Make the drawer follow the drag position, enforce the proper elements being present, autoclose when scrolling, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
 
 ## Installation
 
@@ -49,7 +49,70 @@ Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `
 
 `ion-drawer-vertical` automatically binds `dragup` and `dragdown` events to the `<ion-drawer-vertical-handle>` element. Dragging said element will alter the opened/closed state of the drawer.
 
-The functions `openDrawer()`, `closeDrawer()` and `toggleDrawer()` are exposed into the `$scope` if one wants to manually call these.
+The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are exposed into the `$scope` of the directive itself if one wants to manually call these on the `ion-drawer-handle`.
+
+```
+<ion-drawer-vertical-handle direction="down" state="closed" ng-click="toggleDrawer()" />
+```
+
+### Delegate
+
+`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalHandleDelegate`.
+
+The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are available on this delegate. Calling them will control `ion-drawer-vertical` instances:
+
+```
+angular
+.module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
+.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
+
+	$scope.toggleDrawer = function() {
+		$ionDrawerVerticalHandleDelegate.toggleDrawer();
+	}
+
+});
+```
+
+```
+<body ng-app="app">
+	<ion-header-bar class="bar-positive">
+		<h1 class="title">ion-drawer-vertical</h1>
+		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
+	</ion-header-bar>
+	<ion-drawer-vertical-wrapper class="has-header">
+		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle direction="down" state="closed" />
+	</ion-drawer-vertical-wrapper>
+	<ion-content>
+		[...]
+	</ion-content>
+</body>
+```
+
+_(Not working yet)_ When having multiple instances of `ion-drawer-vertical`, use the `$getByHandle` method along with the `delegate-handle` attribute to control a specific/single instance of `ion-drawer-vertical`:
+```
+<body ng-app="app">
+	<ion-header-bar class="bar-positive">
+		<h1 class="title">ion-drawer-vertical</h1>
+		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
+	</ion-header-bar>
+	<ion-drawer-vertical-wrapper class="has-header">
+		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle direction="down" state="closed" delegate-handle="first" />
+	</ion-drawer-vertical-wrapper>
+	<ion-drawer-vertical-wrapper class="has-header">
+		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle direction="up" state="closed" delegate-handle="second" />
+	</ion-drawer-vertical-wrapper>
+	<ion-content>
+		[...]
+	</ion-content>
+</body>
+```
+```
+$ionDrawerVerticalHandleDelegate.$getByHandle('first').toggleDrawer();
+```
+
 
 ## Acknowledgements
 
