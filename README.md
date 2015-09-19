@@ -4,7 +4,9 @@ A vertical drawer for Ionic
 
 ## Danger, here be dragons
 
-Do note that this is an early release of `ion-drawer-vertical`. Many things are missing _(Make the drawer follow the drag position, enforce the proper elements being present, autoclose when scrolling, etc. to name a few)_. Things might change in the future. Or they might remain the same. The plugin works for me. It might not work for you.
+Do note that this is an early release of `ion-drawer-vertical`. Whilst the basics work, many things are still missing _(Make the drawer follow the drag position, enforce the proper elements being present, autoclose when scrolling, etc. to name a few)_. 
+
+As with all pre-release software: Things might change in the future. Or they might remain the same. Or they could change after all. This plugin works for me. Your mileage may vary.
 
 ## Installation
 
