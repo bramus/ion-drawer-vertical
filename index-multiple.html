@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	<title>Ionic Vertical Drawer</title>
+
+	<!-- Ionic 1.1.0 (local copy) -->
+	<link href="ionic/ionic.css" rel="stylesheet" />
+	<script src="ionic/ionic.bundle.min.js"></script>
+
+	<!-- Vertical Drawer -->
+	<link href="ion-drawer-vertical/ionic.contrib.drawer.vertical.css" rel="stylesheet" />
+	<script src="ion-drawer-vertical/ionic.contrib.drawer.vertical.js"></script>
+
+	<!-- Demo Controller -->
+	<script>
+		angular
+		.module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
+		.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
+
+			// Create a list of 50 items
+			$scope.items = [];
+			for (var i = 0; i < 50; i++) {
+				$scope.items.push(i+1);
+			}
+
+			$scope.toggleDrawer = function(handle) {
+				$ionDrawerVerticalHandleDelegate.$getByHandle(handle).toggleDrawer();
+			}
+
+		});
+	</script>
+
+</head>
+<body ng-app="app" ng-controller="demo">
+	<ion-header-bar class="bar-positive">
+		<button class="button" ng-click="toggleDrawer('first')">Toggle First</button>
+		<h1 class="title">ion-drawer-vertical</h1>
+		<button class="button" ng-click="toggleDrawer('second')">Toggle Second</button>
+	</ion-header-bar>
+
+	<ion-drawer-vertical-wrapper class="has-header">
+		<ion-drawer-vertical-content>
+			<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
+		</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle direction="down" state="opened" delegate-handle="first" />
+	</ion-drawer-vertical-wrapper>
+
+	<ion-drawer-vertical-wrapper class="has-footer">
+		<ion-drawer-vertical-content>
+			<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
+		</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle direction="up" state="opened" delegate-handle="second" />
+	</ion-drawer-vertical-wrapper>
+
+	<ion-content scroll="true">
+
+		<ion-list can-swipe="true">
+			<ion-item ng-repeat="item in items">
+				I am {{ item }}
+				<ion-option-button class="button-positive">Foo</ion-option-button>
+				<ion-option-button class="button-info">Bar</ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+
+	<ion-footer-bar class="bar-positive">
+		<h1 class="title">Footer</h1>
+	</ion-footer-bar>
+</body>
+</html>
