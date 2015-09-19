@@ -54,7 +54,7 @@
 				}, 400);
 			}
 		}
-		this.open = open;
+		this.openDrawer = open;
 
 		// Close the drawer
 		var close = function() {
@@ -69,17 +69,17 @@
 				}, 400);
 			}
 		}
-		this.close = close;
+		this.closeDrawer = close;
 
 		// Toggle the drawer
 		var toggle = function() {
 			if (this.isOpen()) {
-				this.close();
+				this.closeDrawer();
 			} else {
-				this.open();
+				this.openDrawer();
 			}
 		}
-		this.toggle = toggle;
+		this.toggleDrawer = toggle;
 
 		// Check if the drawer is open or not
 		var isOpen = function() {
