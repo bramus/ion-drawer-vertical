@@ -95,13 +95,13 @@
 
 			// Drawer needs to slide up in order to be open, and state is not open: open it!
 			if ((direction == DIRECTION_UP) && !self.isOpen()) {
-				self.open();
+				self.openDrawer();
 				return;
 			}
 
 			// Drawer needs to slide up in order to be closed, and state is open (not closed): close it!
 			if ((direction == DIRECTION_DOWN) && self.isOpen()) {
-				self.close();
+				self.closeDrawer();
 				return;
 			}
 
@@ -115,13 +115,13 @@
 
 			// Drawer needs to slide down in order to be open, and state is not open: open it!
 			if ((direction == DIRECTION_DOWN) && !self.isOpen()) {
-				self.open();
+				self.openDrawer();
 				return;
 			}
 
 			// Drawer needs to slide up in order to be closed, and state is open (not closed): close it!
 			if ((direction == DIRECTION_UP) && self.isOpen()) {
-				self.close();
+				self.closeDrawer();
 				return;
 			}
 
