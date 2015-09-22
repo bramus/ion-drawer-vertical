@@ -2,7 +2,7 @@
 
 A vertical drawer for Ionic
 
-[![Demo ion-drawer-vertical](https://j.gifs.com/Kr7PgZ.gif)](https://youtu.be/rU1Jv3GNy0E)
+[![Demo ion-drawer-vertical](https://j.gifs.com/vQod8q.gif)](https://youtu.be/rU1Jv3GNy0E)
 
 
 ## Danger, here be dragons
