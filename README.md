@@ -22,45 +22,45 @@ Add `ionic.contrib.drawer.vertical` to your Angular app:
 ```
 angular.module('app', [
 	'ionic',
-	'ionic.contrib.drawer'
+	'ionic.contrib.drawer.vertical'
 ])
 ```
 
 ## Usage
 
-Add a `<ion-drawer-vertical-wrapper>` element to your document. Inside it, put a `<ion-drawer-vertical-content>` and a `<ion-drawer-vertical-handle>` element.
+Add a `<ion-drawer-vertical-wrapper>` element to your document. Inside it, put a `<ion-drawer-vertical-content>` and an optional `<ion-drawer-vertical-handle>` element.
 
 ### Configuration
 
-Adjust the `direction` _(possible values: `down` [default] and `up`)_ and `state` _(possible values: `opened` [default] and `closed`)_ attributes of the `<ion-drawer-vertical-handle>` element if need.
+Adjust the `direction` _(possible values: `down` [default] and `up`)_ and `state` _(possible values: `opened` [default] and `closed`)_ attributes of the `<ion-drawer-vertical-wrapper>` element if need.
 
 Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `<ion-drawer-vertical-wrapper>` element if any headers and/or footers are present.
 
 ### Example
 
 ```
-<ion-drawer-vertical-wrapper class="has-header has-footer">
+<ion-drawer-vertical-wrapper class="has-header has-footer" direction="down" state="closed">
 	<ion-drawer-vertical-content>
 		<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
 	</ion-drawer-vertical-content>
-	<ion-drawer-vertical-handle direction="down" state="closed" />
+	<ion-drawer-vertical-handle />
 </ion-drawer-vertical-wrapper>
 ```
 
 ### Events and Functions
 
-`ion-drawer-vertical` automatically binds `dragup` and `dragdown` events to the `<ion-drawer-vertical-handle>` element. Dragging said element will alter the opened/closed state of the drawer.
+`ion-drawer-vertical` automatically binds `dragup` and `dragdown` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will alter the opened/closed state of the drawer.
 
 
-`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalHandleDelegate`. The methods `openDrawer()`, `closeDrawer()`, and `toggleDrawer()` are expose via this delegate. Calling them will control all `ion-drawer-vertical` instances:
+`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalDelegate`. The methods `openDrawer()`, `closeDrawer()`, `toggleDrawer()`, and `isOpen()` are exposed via this delegate. Calling them will control all `ion-drawer-vertical` instances:
 
 ```
 angular
 .module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
-.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
+.controller('demo', function($scope, $ionDrawerVerticalDelegate) {
 
 	$scope.toggleDrawer = function() {
-		$ionDrawerVerticalHandleDelegate.toggleDrawer();
+		$ionDrawerVerticalDelegate.toggleDrawer();
 	}
 
 });
@@ -72,9 +72,9 @@ angular
 		<h1 class="title">ion-drawer-vertical</h1>
 		<button class="button" ng-click="toggleDrawer()">Toggle Drawer</button>
 	</ion-header-bar>
-	<ion-drawer-vertical-wrapper class="has-header">
+	<ion-drawer-vertical-wrapper class="has-header" direction="down" state="closed">
 		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
-		<ion-drawer-vertical-handle direction="down" state="closed" />
+		<ion-drawer-vertical-handle />
 	</ion-drawer-vertical-wrapper>
 	<ion-content>
 		[...]
@@ -90,13 +90,13 @@ When having multiple instances of `ion-drawer-vertical`, use the `$getByHandle` 
 		<h1 class="title">ion-drawer-vertical</h1>
 		<button class="button" ng-click="toggleDrawer('second')">Toggle Second</button>
 	</ion-header-bar>
-	<ion-drawer-vertical-wrapper class="has-header">
+	<ion-drawer-vertical-wrapper class="has-header" direction="down" state="closed" delegate-handle="first">
 		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
-		<ion-drawer-vertical-handle direction="down" state="closed" delegate-handle="first" />
+		<ion-drawer-vertical-handle />
 	</ion-drawer-vertical-wrapper>
-	<ion-drawer-vertical-wrapper class="has-footer">
+	<ion-drawer-vertical-wrapper class="has-footer" direction="up" state="closed" delegate-handle="second">
 		<ion-drawer-vertical-content>[...]</ion-drawer-vertical-content>
-		<ion-drawer-vertical-handle direction="up" state="closed" delegate-handle="second" />
+		<ion-drawer-vertical-handle />
 	</ion-drawer-vertical-wrapper>
 	<ion-content>
 		[...]
@@ -108,10 +108,10 @@ When having multiple instances of `ion-drawer-vertical`, use the `$getByHandle` 
 ```
 angular
 .module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
-.controller('demo', function($scope, $ionDrawerVerticalHandleDelegate) {
+.controller('demo', function($scope, $ionDrawerVerticalDelegate) {
 
 	$scope.toggleDrawer = function(handle) {
-		$ionDrawerVerticalHandleDelegate.$getByHandle(handle).toggleDrawer();
+		$ionDrawerVerticalDelegate.$getByHandle(handle).toggleDrawer();
 	}
 
 });
