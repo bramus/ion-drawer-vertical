@@ -4,7 +4,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVerticalHandle', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalHandleDelegate) {
+	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalDelegate) {
 
 		// We need closure
 		var self = this;
@@ -27,12 +27,15 @@
 
 		// Persist the state and direction on the wrapper
 		// (needed for animations)
-		var $wrapper = $element.parent('ion-drawer-vertical-wrapper');
+		var $wrapper = $element;
 		$wrapper.addClass(state);
 		$wrapper.addClass(direction);
 
+		// Get the handle (if any)
+		var $handle = $element.find('ion-drawer-vertical-handle');
+
 		// Delegate Stuff
-		var deregisterInstance = $ionDrawerVerticalHandleDelegate._registerInstance(
+		var deregisterInstance = $ionDrawerVerticalDelegate._registerInstance(
 			self, $attrs.delegateHandle, function() {
 				return $ionicHistory.isActiveScope($scope);
 			}
@@ -88,7 +91,7 @@
 		this.isOpen = isOpen;
 
 		// Handle drag up event: open or close (based on direction)
-		$ionicGesture.on('dragup', function(e) {
+		$handle.length && $ionicGesture.on('dragup', function(e) {
 
 			// Don't do jack if we are already animating
 			if (isBusyAnimating) return;
@@ -105,10 +108,10 @@
 				return;
 			}
 
-		}, $element);
+		}, $handle);
 
 		// Handle drag down event: open or close (based on direction)
-		$ionicGesture.on('dragdown', function(e) {
+		$handle.length && $ionicGesture.on('dragdown', function(e) {
 
 			// Don't do jack if we are already animating
 			if (isBusyAnimating) return;
@@ -125,7 +128,7 @@
 				return;
 			}
 
-		}, $element);
+		}, $handle);
 
 	});
 
@@ -137,14 +140,14 @@
 
 	.directive('ionDrawerVerticalWrapper', function() {
 		return {
-			restrict: 'E'
+			restrict: 'E',
+			controller: '$ionDrawerVertical'
 		}
 	})
 
 	.directive('ionDrawerVerticalHandle', function() {
 		return {
-			restrict: 'E',
-			controller: '$ionDrawerVerticalHandle'
+			restrict: 'E'
 		}
 	});
 
@@ -155,7 +158,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical')
 
-	.service('$ionDrawerVerticalHandleDelegate', ionic.DelegateService([
+	.service('$ionDrawerVerticalDelegate', ionic.DelegateService([
 		'openDrawer',
 		'closeDrawer',
 		'toggleDrawer',
