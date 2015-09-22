@@ -158,7 +158,8 @@
 	.service('$ionDrawerVerticalHandleDelegate', ionic.DelegateService([
 		'openDrawer',
 		'closeDrawer',
-		'toggleDrawer'
+		'toggleDrawer',
+		'isOpen'
 	]));
 
 
