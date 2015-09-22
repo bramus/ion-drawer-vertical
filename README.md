@@ -2,6 +2,9 @@
 
 A vertical drawer for Ionic
 
+[![Demo ion-drawer-vertical](https://j.gifs.com/Kr7PgZ.gif)](https://youtu.be/rU1Jv3GNy0E)
+
+
 ## Danger, here be dragons
 
 Do note that this is an early release of `ion-drawer-vertical`. Whilst the basics work, many things are still missing _(Enforce the proper elements being present, autoclose when scrolling in a list, etc. to name a few)_. 
