@@ -13,31 +13,37 @@ As with all pre-release software: Things might change in the future. Or they mig
 
 ## Installation
 
-Add the `ionic.contrib.drawer.vertical.js` and `ionic.contrib.drawer.vertical.css` files to your index file
+You may clone this repo or get `ion-drawer-vertical` via Bower:
 
 ```
-<link href="ion-drawer-vertical/ionic.contrib.drawer.vertical.css" rel="stylesheet">
-<script src="ion-drawer-vertical/ionic.contrib.drawer.vertical.js"></script>
-```
-
-Add `ionic.contrib.drawer.vertical` to your Angular app:
-
-```
-angular.module('app', [
-	'ionic',
-	'ionic.contrib.drawer.vertical'
-])
+bower install ion-drawer-vertical
 ```
 
 ## Usage
 
-Add a `<ion-drawer-vertical-wrapper>` element to your document. Inside it, put a `<ion-drawer-vertical-content>` and an optional `<ion-drawer-vertical-handle>` element.
+1. Refer to the `ionic.contrib.drawer.vertical.js` and `ionic.contrib.drawer.vertical.css` files from within your HTML file:
+
+	```
+	<link href="src/ionic.contrib.drawer.vertical.css" rel="stylesheet">
+	<script src="src/ionic.contrib.drawer.vertical.js"></script>
+	```
+
+2. Inject `ionic.contrib.drawer.vertical` as a dependency into your Angular app:
+
+	```
+	angular.module('app', [
+		'ionic',
+		'ionic.contrib.drawer.vertical'
+	])
+	```
+
+3. Add a `<ion-drawer-vertical-wrapper>` element to your document. Inside it, put a `<ion-drawer-vertical-content>` and an optional `<ion-drawer-vertical-handle>` element.
 
 ### Configuration
 
-Adjust the `direction` _(possible values: `down` [default] and `up`)_ and `state` _(possible values: `opened` [default] and `closed`)_ attributes of the `<ion-drawer-vertical-wrapper>` element if need.
+Adjust the `direction` _(possible values: `down` [default] and `up`)_ and `state` _(possible values: `opened` [default] and `closed`)_ attributes of the `<ion-drawer-vertical-wrapper>` element if needed.
 
-Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `<ion-drawer-vertical-wrapper>` element if any headers and/or footers are present.
+If any headers and/or footers are present, also set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `<ion-drawer-vertical-wrapper>` element.
 
 ### Example
 
@@ -52,7 +58,7 @@ Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `
 
 ### Events and Functions
 
-`ion-drawer-vertical` automatically binds `drag` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will make the drawer respond to that state. Upon releasing the drawer will either revert to its original state, or to the opposite one (viz. open will become closed) when having dragged far enough (over 33% of the height of the panel).
+`ion-drawer-vertical` automatically binds `drag` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will make the drawer follow its moves. Upon releasing the handle, the drawer will either revert to its original state, or to the opposite one (e.g. open will become closed) when having dragged far enough _(over 33% of the height of the panel)_.
 
 
 `ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalDelegate`. The methods `openDrawer()`, `closeDrawer()`, `toggleDrawer()`, and `isOpen()` are exposed via this delegate. Calling them will control all `ion-drawer-vertical` instances:
