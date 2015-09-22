@@ -29,8 +29,8 @@
 				$ionDrawerVerticalDelegate.toggleDrawer();
 			}
 
-			$scope.drawerIsOpen = function() {
-				return $ionDrawerVerticalDelegate.isOpen();
+			$scope.drawerIs = function(state) {
+				return $ionDrawerVerticalDelegate.getState() == state;
 			}
 
 		});
@@ -40,9 +40,10 @@
 <body ng-app="app" ng-controller="demo">
 	<ion-header-bar class="bar-positive">
 		<h1 class="title">ion-drawer-vertical</h1>
-		<button class="button" ng-click="toggleDrawer()">
-			<span ng-show="drawerIsOpen()">Hide &uarr;</span>
-			<span ng-show="!drawerIsOpen()">Show &darr;</span>
+		<button class="button" ng-click="toggleDrawer()" style="width: 40px; font-weight: 700;">
+			<i class="icon ion-ios-arrow-down" ng-show="drawerIs('opened')"></i>
+			<i class="icon ion-ios-loop" ng-show="!drawerIs('opened') && !drawerIs('closed')"></i>
+			<i class="icon ion-ios-arrow-up" ng-show="drawerIs('closed')"></i>
 		</button>
 	</ion-header-bar>
 

@@ -234,7 +234,7 @@
 		'openDrawer',
 		'closeDrawer',
 		'toggleDrawer',
-		'isOpen'
+		'getState'
 	]));
 
 
