@@ -61,7 +61,7 @@ If any headers and/or footers are present, also set the proper `has-*` classes _
 `ion-drawer-vertical` automatically binds `drag` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will make the drawer follow its moves. Upon releasing the handle, the drawer will either revert to its original state, or to the opposite one (e.g. open will become closed) when having dragged far enough _(over 33% of the height of the panel)_.
 
 
-`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalDelegate`. The methods `openDrawer()`, `closeDrawer()`, `toggleDrawer()`, and `isOpen()` are exposed via this delegate. Calling them will control all `ion-drawer-vertical` instances:
+`ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalDelegate`. The methods `openDrawer()`, `closeDrawer()`, `toggleDrawer()`, and `getState()` are exposed via this delegate. Calling them will control all `ion-drawer-vertical` instances:
 
 ```
 angular
