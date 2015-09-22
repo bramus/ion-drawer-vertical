@@ -1,6 +1,6 @@
 # ion-drawer-vertical
 
-A vertical drawer for Ionic
+A vertical drawer / slide-out panel for Ionic
 
 [![Demo ion-drawer-vertical](https://j.gifs.com/vQod8q.gif)](https://youtu.be/rU1Jv3GNy0E)
 
