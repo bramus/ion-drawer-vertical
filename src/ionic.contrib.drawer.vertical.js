@@ -12,6 +12,9 @@
 		// Possible states the drawer can have
 		var STATE_CLOSE = 'closed';
 		var STATE_OPEN = 'opened';
+		var STATE_DRAGGING = 'dragging';
+		var STATE_DRAGGED = 'dragged';
+		var STATE_ANIMATING = 'animating';
 
 		// Possible directions the drawer may slide out to
 		var DIRECTION_DOWN = 'down';
@@ -21,15 +24,17 @@
 		// default: STATE_OPEN and DIRECTION_DOWN
 		var state = ($attrs.state === STATE_CLOSE ? STATE_CLOSE : STATE_OPEN);
 		var direction = ($attrs.direction === DIRECTION_UP ? DIRECTION_UP : DIRECTION_DOWN);
-
-		// Parameter which tells if we are animating or not
-		var isBusyAnimating = false;
+		var prevState = state; // Store previous state (limited to STATE_OPEN/STATE_CLOSE) as we'll need that later one, after having dragged the handle
 
 		// Persist the state and direction on the wrapper
 		// (needed for animations)
 		var $wrapper = $element;
 		$wrapper.addClass(state);
 		$wrapper.addClass(direction);
+
+		// Height of the contents
+		// Based on how much we dragged (compared to this height) we well close automatically or fall back to the opened state)
+		var height = $wrapper[0].clientHeight;
 
 		// Get the handle (if any)
 		var $handle = $element.find('ion-drawer-vertical-handle');
@@ -44,16 +49,41 @@
 			deregisterInstance();
 		});
 
+		// State functions
+		var getState = function() {
+			return state;
+		}
+		var isOpen = function() {
+			return state == STATE_OPEN;
+		}
+		var isClosed = function() {
+			return state == STATE_CLOSE;
+		}
+		var isBusyAnimating = function() {
+			return state == STATE_ANIMATING;
+		}
+		var isBusyDragging = function() {
+			return state == STATE_DRAGGING;
+		}
+		var isDoneDragging = function() {
+			return state == STATE_DRAGGED;
+		}
+		this.getState = getState;
+		this.isOpen = isOpen;
+		this.isClosed = isClosed;
+		this.isBusyDragging = isBusyDragging;
+		this.isBusyAnimating = isBusyAnimating;
+
 		// Open the drawer
 		var open = function() {
-			if (!this.isOpen() || isBusyAnimating) {
-				isBusyAnimating = true;
+			if ((isClosed() || isDoneDragging()) && !isBusyAnimating()) {
+				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
+				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_CLOSE);
 				$wrapper.addClass(STATE_OPEN + ' animate');
 				$timeout(function() {
 					$wrapper.removeClass('animate');
-					state = STATE_OPEN;
-					isBusyAnimating = false;
+					state = prevState = STATE_OPEN;
 				}, 400);
 			}
 		}
@@ -61,14 +91,14 @@
 
 		// Close the drawer
 		var close = function() {
-			if (this.isOpen() || isBusyAnimating) {
-				isBusyAnimating = true;
+			if ((isOpen() || isDoneDragging()) && !isBusyAnimating()) {
+				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
+				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_OPEN);
 				$wrapper.addClass(STATE_CLOSE + ' animate');
 				$timeout(function() {
 					$wrapper.removeClass('animate');
-					state = STATE_CLOSE;
-					isBusyAnimating = false;
+					state = prevState = STATE_CLOSE;
 				}, 400);
 			}
 		}
@@ -84,48 +114,90 @@
 		}
 		this.toggleDrawer = toggle;
 
-		// Check if the drawer is open or not
-		var isOpen = function() {
-			return state === STATE_OPEN;
+		var limitNumberBetween = function(number, min, max) {
+			number = Math.min(max, number);
+			number = Math.max(min, number);
+			return number;
 		}
-		this.isOpen = isOpen;
 
-		// Handle drag up event: open or close (based on direction)
-		$handle.length && $ionicGesture.on('dragup', function(e) {
+		// Make the panel follow the cursor when dragging
+		$handle.length && $ionicGesture.on('drag', ionic.DomUtil.animationFrameThrottle(function(e) {
 
-			// Don't do jack if we are already animating
-			if (isBusyAnimating) return;
+			// Don't respond to drag if animating automatically
+			if (isBusyAnimating()) return;
 
-			// Drawer needs to slide up in order to be open, and state is not open: open it!
-			if ((direction == DIRECTION_UP) && !self.isOpen()) {
-				self.openDrawer();
-				return;
+			// Store the current state (which is STATE_OPEN or STATE_CLOSE) for later
+			if (!isBusyDragging()) prevState = state;
+
+			// Update state to dragging
+			state = STATE_DRAGGING;
+
+			// The number of pixels we have dragged
+			var deltaY = e.gesture.deltaY;
+
+			// Add or Subtract the height based on the direction of the previous state:
+			// in some cases the drag position is relative to the bottom or top of the element
+			// Also: don't overstretch!
+			if (direction == DIRECTION_DOWN) {
+				if (prevState == STATE_CLOSE) {
+					deltaY -= height;
+				}
+				deltaY = limitNumberBetween(deltaY, -height, 0);
+			}
+			if (direction == DIRECTION_UP) {
+				if (prevState == STATE_CLOSE) {
+					deltaY += height;
+				}
+				deltaY = limitNumberBetween(deltaY, 0, height);
 			}
 
-			// Drawer needs to slide up in order to be closed, and state is open (not closed): close it!
-			if ((direction == DIRECTION_DOWN) && self.isOpen()) {
-				self.closeDrawer();
-				return;
-			}
+			// Make drawer follow it all
+			$wrapper.css('transform', 'translate3d(0,' + deltaY + 'px,0)');
 
-		}, $handle);
+		}), $handle);
 
-		// Handle drag down event: open or close (based on direction)
-		$handle.length && $ionicGesture.on('dragdown', function(e) {
+		// Don't let the element hang in a semi-open state when done dragging
+		$handle.length && $ionicGesture.on('dragend', function(e) {
 
-			// Don't do jack if we are already animating
-			if (isBusyAnimating) return;
+			// Done dragging manually?
+			if (isBusyDragging()) {
 
-			// Drawer needs to slide down in order to be open, and state is not open: open it!
-			if ((direction == DIRECTION_DOWN) && !self.isOpen()) {
-				self.openDrawer();
-				return;
-			}
+				// Update state
+				state = STATE_DRAGGED;
 
-			// Drawer needs to slide up in order to be closed, and state is open (not closed): close it!
-			if ((direction == DIRECTION_UP) && self.isOpen()) {
-				self.closeDrawer();
-				return;
+				if (direction == DIRECTION_UP) {
+
+					var multiplier = (prevState == STATE_CLOSE) ? -1 : 1;
+
+					// We dragged over 1/3rd of the panel height
+					if (e.gesture.deltaY > multiplier * height / 3) {
+						self.closeDrawer();
+					}
+
+					// We didn't drag over halfway
+					else {
+						self.openDrawer();
+					}
+
+				}
+
+				else /* if (direction == DIRECTION_DOWN) */ {
+
+					var multiplier = (prevState == STATE_OPEN) ? -1 : 1;
+
+					// We dragged over 1/3rd of the panel height
+					if (e.gesture.deltaY < multiplier * height / 3) {
+						self.closeDrawer();
+					}
+
+					// We didn't drag over halfway
+					else {
+						self.openDrawer();
+					}
+
+				}
+
+
 			}
 
 		}, $handle);
