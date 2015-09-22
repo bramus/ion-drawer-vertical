@@ -4,7 +4,7 @@ A vertical drawer for Ionic
 
 ## Danger, here be dragons
 
-Do note that this is an early release of `ion-drawer-vertical`. Whilst the basics work, many things are still missing _(Make the drawer follow the drag position, enforce the proper elements being present, autoclose when scrolling, etc. to name a few)_. 
+Do note that this is an early release of `ion-drawer-vertical`. Whilst the basics work, many things are still missing _(Enforce the proper elements being present, autoclose when scrolling in a list, etc. to name a few)_. 
 
 As with all pre-release software: Things might change in the future. Or they might remain the same. Or they could change after all. This plugin works for me. Your mileage may vary.
 
@@ -49,7 +49,7 @@ Set the proper `has-*` classes _(such as `has-header` or `has-footer`)_ on the `
 
 ### Events and Functions
 
-`ion-drawer-vertical` automatically binds `dragup` and `dragdown` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will alter the opened/closed state of the drawer.
+`ion-drawer-vertical` automatically binds `drag` events to the `<ion-drawer-vertical-handle>` element if it's present. Dragging said element up/down will make the drawer respond to that state. Upon releasing the drawer will either revert to its original state, or to the opposite one (viz. open will become closed) when having dragged far enough (over 33% of the height of the panel).
 
 
 `ion-drawer-vertical` also ships with a delegate `$ionDrawerVerticalDelegate`. The methods `openDrawer()`, `closeDrawer()`, `toggleDrawer()`, and `isOpen()` are exposed via this delegate. Calling them will control all `ion-drawer-vertical` instances:
