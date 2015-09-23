@@ -224,6 +224,11 @@
 				var oldDoTouchStart = scrollView.doTouchStart.bind(scrollView);
 				scrollView.doTouchStart = function(touches, timeStamp) {
 
+					// Fix for MobileSafari “RangeError: Maximum call stack size exceeded.” exception
+					if (scrollView.__isTracking) {
+						return;
+					}
+
 					oldDoTouchStart(touches, timeStamp);
 
 					scrollView.__scrollTopAtTouchStart = scrollView.__scrollTop;
