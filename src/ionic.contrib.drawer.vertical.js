@@ -158,6 +158,9 @@
 
 		var handleDragEnd = function(deltaY, force) {
 
+			// Fix for MobileSafari triggering dragend twice
+			if (deltaY == undefined) return;
+
 			// Done dragging manually?
 			if (isBusyDragging()) {
 
