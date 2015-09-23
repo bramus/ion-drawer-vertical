@@ -158,9 +158,6 @@
 
 		var handleDragEnd = function(deltaY, force) {
 
-			// Fix for MobileSafari triggering dragend twice
-			if (deltaY == undefined) return;
-
 			// Done dragging manually?
 			if (isBusyDragging()) {
 
@@ -227,17 +224,12 @@
 				var oldDoTouchStart = scrollView.doTouchStart.bind(scrollView);
 				scrollView.doTouchStart = function(touches, timeStamp) {
 
-					// Fix for MobileSafari “RangeError: Maximum call stack size exceeded.” exception
-					if (scrollView.__isTracking) {
-						return;
-					}
-
 					oldDoTouchStart(touches, timeStamp);
 
 					scrollView.__scrollTopAtTouchStart = scrollView.__scrollTop;
 					scrollView.__scrollLeftAtTouchStart = scrollView.__scrollLeft;
 
-					ionic.trigger('touchstart', {
+					ionic.trigger('scrollview.touchstart', {
 						scrollTop: scrollView.__scrollTop,
 						scrollLeft: scrollView.__scrollLeft,
 						target: scrollView.__container
@@ -254,7 +246,7 @@
 
 					oldDoTouchMove(touches, timeStamp, scale);
 
-					ionic.trigger('touchmove', {
+					ionic.trigger('scrollview.touchmove', {
 						scrollTop: scrollView.__scrollTop,
 						deltaY: scrollView.__scrollTopAtTouchStart - scrollView.__scrollTop,
 						scrollLeft: scrollView.__scrollLeft,
@@ -272,7 +264,7 @@
 					}
 					oldDoTouchEnd(e, timeStamp);
 
-					ionic.trigger('touchend', {
+					ionic.trigger('scrollview.touchend', {
 						scrollTop: scrollView.__scrollTop,
 						deltaY: scrollView.__scrollTopAtTouchStart - scrollView.__scrollTop,
 						scrollLeft: scrollView.__scrollLeft,
@@ -282,7 +274,7 @@
 
 				}
 
-				ionic.on('touchmove', function(e) {
+				ionic.on('scrollview.touchmove', function(e) {
 
 					// @TODO: once the element has reached the closed state during the drag, don't allow one to reopen it during the same drag
 
@@ -294,7 +286,7 @@
 
 				}, scrollView.__container);
 
-				ionic.on('touchend', function(e) {
+				ionic.on('scrollview.touchend', function(e) {
 
 					if (!self.isClosed()) {
 						handleDragEnd(e.detail.deltaY, scrollView.__isDecelerating);
