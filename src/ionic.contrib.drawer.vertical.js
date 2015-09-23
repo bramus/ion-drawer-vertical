@@ -56,6 +56,9 @@
 		var isOpen = function() {
 			return state == STATE_OPEN;
 		}
+		var isOrWasOpen = function() {
+			return (state == STATE_OPEN) || (prevState == STATE_OPEN);
+		}
 		var isClosed = function() {
 			return state == STATE_CLOSE;
 		}
@@ -70,6 +73,7 @@
 		}
 		this.getState = getState;
 		this.isOpen = isOpen;
+		this.isOrWasOpen = isOrWasOpen;
 		this.isClosed = isClosed;
 		this.isBusyDragging = isBusyDragging;
 		this.isBusyAnimating = isBusyAnimating;
