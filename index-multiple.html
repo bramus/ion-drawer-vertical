@@ -16,7 +16,7 @@
 	<!-- Demo Controller -->
 	<script>
 		angular
-		.module('app', ['ionic.contrib.drawer.vertical', 'ionic'])
+		.module('app', ['ionic', 'ionic.contrib.drawer.vertical'])
 		.controller('demo', function($scope, $ionDrawerVerticalDelegate) {
 
 			// Create a list of 50 items
@@ -55,7 +55,6 @@
 	</ion-drawer-vertical-wrapper>
 
 	<ion-content scroll="true">
-
 		<ion-list can-swipe="true">
 			<ion-item ng-repeat="item in items">
 				I am {{ item }}
