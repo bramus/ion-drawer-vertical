@@ -5,7 +5,7 @@
 	"authors": [
 		"Bramus! <bramus@bram.us>"
 	],
-	"description": "A vertical drawer for Ionic",
+	"description": "A vertical slide-out panel (toggle panel)",
 	"main": [
 		"src/ionic.contrib.drawer.vertical.js",
 		"src/ionic.contrib.drawer.vertical.css"
