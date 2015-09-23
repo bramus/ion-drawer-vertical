@@ -124,8 +124,7 @@
 			return number;
 		}
 
-		// Make the panel follow the cursor when dragging
-		$handle.length && $ionicGesture.on('drag', ionic.DomUtil.animationFrameThrottle(function(e) {
+		var handleDrag = function(deltaY) {
 
 			// Don't respond to drag if animating automatically
 			if (isBusyAnimating()) return;
@@ -135,9 +134,6 @@
 
 			// Update state to dragging
 			state = STATE_DRAGGING;
-
-			// The number of pixels we have dragged
-			var deltaY = e.gesture.deltaY;
 
 			// Add or Subtract the height based on the direction of the previous state:
 			// in some cases the drag position is relative to the bottom or top of the element
@@ -158,10 +154,9 @@
 			// Make drawer follow it all
 			$wrapper.css('transform', 'translate3d(0,' + deltaY + 'px,0)');
 
-		}), $handle);
+		}
 
-		// Don't let the element hang in a semi-open state when done dragging
-		$handle.length && $ionicGesture.on('dragend', function(e) {
+		var handleDragEnd = function(deltaY, force) {
 
 			// Done dragging manually?
 			if (isBusyDragging()) {
@@ -174,7 +169,7 @@
 					var multiplier = (prevState == STATE_CLOSE) ? -1 : 1;
 
 					// We dragged over 1/3rd of the panel height
-					if (e.gesture.deltaY > multiplier * height / 3) {
+					if ((force && deltaY > 0) || (deltaY > multiplier * height / 3)) {
 						self.closeDrawer();
 					}
 
@@ -190,7 +185,7 @@
 					var multiplier = (prevState == STATE_OPEN) ? -1 : 1;
 
 					// We dragged over 1/3rd of the panel height
-					if (e.gesture.deltaY < multiplier * height / 3) {
+					if ((force && deltaY < 0) || deltaY < multiplier * height / 3) {
 						self.closeDrawer();
 					}
 
@@ -204,6 +199,16 @@
 
 			}
 
+		}
+
+		// Make the panel follow the cursor when dragging
+		$handle.length && $ionicGesture.on('drag', ionic.DomUtil.animationFrameThrottle(function(e) {
+			handleDrag(e.gesture.deltaY);
+		}), $handle);
+
+		// Don't let the element hang in a semi-open state when done dragging
+		$handle.length && $ionicGesture.on('dragend', function(e) {
+			handleDragEnd(e.gesture.deltaY);
 		}, $handle);
 
 	});
