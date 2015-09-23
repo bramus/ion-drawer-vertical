@@ -4,7 +4,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalDelegate) {
+	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate) {
 
 		// We need closure
 		var self = this;
@@ -210,6 +210,93 @@
 		$handle.length && $ionicGesture.on('dragend', function(e) {
 			handleDragEnd(e.gesture.deltaY);
 		}, $handle);
+
+		// autoclose-on-scroll activated? Hook it!
+		if (($attrs.autocloseOnScroll != undefined) && ($attrs.autocloseOnScroll !== 'false')) {
+
+			$timeout(function() {
+
+				var scrollView = $ionicScrollDelegate.getScrollView();
+
+				if (!scrollView) return;
+
+				// Monkey patch doTouchStart, doTouchMove, and doTouchEnd so that they trigger events
+				var oldDoTouchStart = scrollView.doTouchStart.bind(scrollView);
+				scrollView.doTouchStart = function(touches, timeStamp) {
+
+					oldDoTouchStart(touches, timeStamp);
+
+					scrollView.__scrollTopAtTouchStart = scrollView.__scrollTop;
+					scrollView.__scrollLeftAtTouchStart = scrollView.__scrollLeft;
+
+					ionic.trigger('touchstart', {
+						scrollTop: scrollView.__scrollTop,
+						scrollLeft: scrollView.__scrollLeft,
+						target: scrollView.__container
+					});
+
+				}
+
+				var oldDoTouchMove = scrollView.doTouchMove.bind(scrollView);
+				scrollView.doTouchMove = function(touches, timeStamp, scale) {
+
+					if (!scrollView.__isTracking) {
+						return;
+					}
+
+					oldDoTouchMove(touches, timeStamp, scale);
+
+					ionic.trigger('touchmove', {
+						scrollTop: scrollView.__scrollTop,
+						deltaY: scrollView.__scrollTopAtTouchStart - scrollView.__scrollTop,
+						scrollLeft: scrollView.__scrollLeft,
+						deltaX: scrollView.__scrollLeftAtTouchStart - scrollView.__scrollLeft,
+						target: scrollView.__container
+					});
+
+				}
+
+				var oldDoTouchEnd = scrollView.doTouchEnd.bind(scrollView);
+				scrollView.doTouchEnd = function(e, timeStamp) {
+
+					if (!scrollView.__isTracking) {
+						return;
+					}
+					oldDoTouchEnd(e, timeStamp);
+
+					ionic.trigger('touchend', {
+						scrollTop: scrollView.__scrollTop,
+						deltaY: scrollView.__scrollTopAtTouchStart - scrollView.__scrollTop,
+						scrollLeft: scrollView.__scrollLeft,
+						deltaX: scrollView.__scrollLeftAtTouchStart - scrollView.__scrollLeft,
+						target: scrollView.__container
+					});
+
+				}
+
+				ionic.on('touchmove', function(e) {
+
+					// @TODO: once the element has reached the closed state during the drag, don't allow one to reopen it during the same drag
+
+					// @TODO: allow for a configurable offset
+
+					if (self.isOrWasOpen()) {
+						handleDrag(e.detail.deltaY);
+					}
+
+				}, scrollView.__container);
+
+				ionic.on('touchend', function(e) {
+
+					if (!self.isClosed()) {
+						handleDragEnd(e.detail.deltaY, scrollView.__isDecelerating);
+					}
+
+				}, scrollView.__container);
+
+			});
+
+		}
 
 	});
 
