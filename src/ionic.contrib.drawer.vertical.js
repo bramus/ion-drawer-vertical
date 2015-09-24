@@ -220,6 +220,11 @@
 
 				if (!scrollView) return;
 
+				if (scrollView.isNative) {
+					console.warn('$ionDrawerVertical: cannot set up autoclose-on-scroll as the scrollView is native.');
+					return;
+				}
+
 				// Monkey patch doTouchStart, doTouchMove, and doTouchEnd so that they trigger events
 				var oldDoTouchStart = scrollView.doTouchStart.bind(scrollView);
 				scrollView.doTouchStart = function(touches, timeStamp) {
