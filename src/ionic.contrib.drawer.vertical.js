@@ -88,6 +88,7 @@
 				$timeout(function() {
 					$wrapper.removeClass('animate');
 					state = prevState = STATE_OPEN;
+					height = $wrapper[0].clientHeight;
 				}, 400);
 			}
 		}
