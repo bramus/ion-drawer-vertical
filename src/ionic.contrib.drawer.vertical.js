@@ -4,7 +4,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate) {
+	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $q, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate) {
 
 		// We need closure
 		var self = this;
@@ -80,6 +80,7 @@
 
 		// Open the drawer
 		var open = function() {
+			var q = $q.defer();
 			if ((isClosed() || isDoneDragging()) && !isBusyAnimating()) {
 				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
 				state = STATE_ANIMATING;
@@ -89,13 +90,18 @@
 					$wrapper.removeClass('animate');
 					state = prevState = STATE_OPEN;
 					height = $wrapper[0].clientHeight;
+					q.resolve();
 				}, 400);
+				return q.promise;
 			}
+			q.resolve();
+			return q.promise;
 		}
 		this.openDrawer = open;
 
 		// Close the drawer
 		var close = function() {
+			var q = $q.defer();
 			if ((isOpen() || isDoneDragging()) && !isBusyAnimating()) {
 				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
 				state = STATE_ANIMATING;
@@ -104,17 +110,21 @@
 				$timeout(function() {
 					$wrapper.removeClass('animate');
 					state = prevState = STATE_CLOSE;
+					q.resolve();
 				}, 400);
+				return q.promise;
 			}
+			q.resolve();
+			return q.promise;
 		}
 		this.closeDrawer = close;
 
 		// Toggle the drawer
 		var toggle = function() {
 			if (this.isOpen()) {
-				this.closeDrawer();
+				return this.closeDrawer();
 			} else {
-				this.openDrawer();
+				return this.openDrawer();
 			}
 		}
 		this.toggleDrawer = toggle;

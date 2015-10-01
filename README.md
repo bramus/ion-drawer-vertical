@@ -161,6 +161,23 @@ angular
 </body>
 ```
 
+## Callbacks / Promises
+
+The methods `closeDrawer()`, `openDrawer()`, and `toggleDrawer()` all return a promise (provided by [Angular's `$q`](https://docs.angularjs.org/api/ng/service/$q)) allowing you to have callbacks
+
+```js
+$scope.toggleDrawer = function() {
+	$ionDrawerVerticalDelegate.toggleDrawer().then(function() {
+		$ionDrawerVerticalDelegate.toggleDrawer().then(function() {
+			$ionicPopup.alert({
+				title: 'Done',
+				template: 'Done sliding up and down'
+			});
+		});
+	});
+}
+```
+
 ## Acknowledgements
 
 [`ionic-contrib-drawer`](https://github.com/driftyco/ionic-ion-drawer) has been a source of inspiration / a starting point for `ion-drawer-vertical`.
