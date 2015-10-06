@@ -85,6 +85,7 @@ ion-drawer-vertical-wrapper.down.has-header.has-subheader.has-tabs-top {
 }
 
 ion-drawer-vertical-wrapper.opened {
+	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
 
