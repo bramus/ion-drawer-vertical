@@ -213,12 +213,12 @@
 		}
 
 		// Make the panel follow the cursor when dragging
-		$handle.length && $ionicGesture.on('drag', ionic.DomUtil.animationFrameThrottle(function(e) {
+		$handle.length && !(($handle.attr('no-drag') !== undefined) && ($handle.attr('no-drag') !== 'false')) && $ionicGesture.on('drag', ionic.DomUtil.animationFrameThrottle(function(e) {
 			handleDrag(e.gesture.deltaY);
 		}), $handle);
 
 		// Don't let the element hang in a semi-open state when done dragging
-		$handle.length && $ionicGesture.on('dragend', function(e) {
+		$handle.length && !(($handle.attr('no-drag') !== undefined) && ($handle.attr('no-drag') !== 'false')) && $ionicGesture.on('dragend', function(e) {
 			handleDragEnd(e.gesture.deltaY);
 		}, $handle);
 
