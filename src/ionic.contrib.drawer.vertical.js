@@ -35,7 +35,23 @@
 		// Height of the contents
 		// Based on how much we dragged (compared to this height) we well close automatically or fall back to the opened state)
 		var height = $wrapper[0].clientHeight;
+        
+        // get margin if defined, default is 0 capped at element height
+        var margin = (parseInt($attrs.margin) || 0) < $wrapper[0].clientHeight ? (parseInt($attrs.margin) || 0) : $wrapper[0].clientHeight;
 
+        // set initial drawer position
+        // add margin to position
+        var negativePos = margin - $wrapper[0].clientHeight;
+        var positivePos = $wrapper[0].clientHeight - margin;
+
+        if (state === STATE_CLOSE) {
+            if (direction === DIRECTION_DOWN)
+                $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d( 0,' + negativePos + 'px, 0)';
+            else
+                $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d( 0,' + positivePos + 'px, 0)';
+        } else
+            $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';
+        
 		// Get the handle (if any)
 		var $handle = $element.find('ion-drawer-vertical-handle');
 
@@ -85,6 +101,8 @@
 				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
 				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_CLOSE);
+                 //set element position when open
+                $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';
 				$wrapper.addClass(STATE_OPEN + ' animate');
 				$timeout(function() {
 					$wrapper.removeClass('animate');
@@ -102,10 +120,19 @@
 		// Close the drawer
 		var close = function() {
 			var q = $q.defer();
+            var y = 0;
 			if ((isOpen() || isDoneDragging()) && !isBusyAnimating()) {
-				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
+				//$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles. REMOVED BECAUSE OF translate3D resetting position
 				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_OPEN);
+                //get position of element when closed
+                if (direction === DIRECTION_DOWN)
+                    y = margin - $wrapper[0].clientHeight;
+                else
+                    y = $wrapper[0].clientHeight - margin;
+
+                //set element position when closed
+                $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d( 0,' + y + 'px, 0)';
 				$wrapper.addClass(STATE_CLOSE + ' animate');
 				$timeout(function() {
 					$wrapper.removeClass('animate');
@@ -151,15 +178,15 @@
 			// Also: don't overstretch!
 			if (direction == DIRECTION_DOWN) {
 				if (prevState == STATE_CLOSE) {
-					deltaY -= height;
+					deltaY -= height - margin;
 				}
-				deltaY = limitNumberBetween(deltaY, -height, 0);
+				deltaY = limitNumberBetween(deltaY, margin - height, 0);
 			}
 			if (direction == DIRECTION_UP) {
 				if (prevState == STATE_CLOSE) {
-					deltaY += height;
+					deltaY += height - margin;
 				}
-				deltaY = limitNumberBetween(deltaY, 0, height);
+				deltaY = limitNumberBetween(deltaY, 0, height - margin);
 			}
 
 			// Make drawer follow it all
