@@ -29,8 +29,6 @@ ion-drawer-vertical-handle {
 ion-drawer-vertical-wrapper.up/*.closed*/ {
 	top: auto;
 	bottom: 0;
-	-webkit-transform: translate3d(0, 100%, 0);
-	transform: translate3d(0, 100%, 0);
 }
 
 ion-drawer-vertical-wrapper.up.has-footer {
@@ -64,8 +62,6 @@ ion-drawer-vertical-wrapper.up ion-drawer-vertical-handle {
 ion-drawer-vertical-wrapper.down/*.closed*/ {
 	top: 0;
 	bottom: auto;
-	-webkit-transform: translate3d(0, -100%, 0);
-	transform: translate3d(0, -100%, 0);
 }
 
 ion-drawer-vertical-wrapper.down.has-header {
@@ -82,11 +78,6 @@ ion-drawer-vertical-wrapper.down.has-tabs-top {
 
 ion-drawer-vertical-wrapper.down.has-header.has-subheader.has-tabs-top {
 	top: 137px;
-}
-
-ion-drawer-vertical-wrapper.opened {
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
 }
 
 ion-drawer-vertical-wrapper.animate {
