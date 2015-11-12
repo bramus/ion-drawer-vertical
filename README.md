@@ -56,6 +56,8 @@ If any headers and/or footers are present, also set the proper `has-*` classes _
 
 When having a scrollable element (viz. [`ion-scroll`](http://ionicframework.com/docs/api/directive/ionScroll/) or [`ion-content[scroll="true"]`](http://ionicframework.com/docs/api/directive/ionContent/)) it's possible to make the drawer automagically close when scrolling the content in the direction of the drawer itself. Enable it by setting `autoclose-on-scroll` on the `<ion-drawer-vertical-wrapper>` element. _[[PEN](http://codepen.io/bramus/pen/WQGQVN)]_
 
+Adjust `<ion-drawer-vertical-wrapper>` atribute`margin`(default is 0, it's capped at  `<ion-drawer-vertical-wrapper>` height), to show some part of the drawer content when closed. 
+
 _(@note: the autoclose feature required some monkey patching of [Ionic's scrollView](https://github.com/driftyco/ionic/blob/master/js/views/scrollView.js) behavior. Above that has not been tested (and won't work) with [Ionic's scrollViewNative](https://github.com/driftyco/ionic/blob/master/js/views/scrollViewNative.js))_
 
 ### Events and Functions
