@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	<title>Ionic Vertical Drawer</title>
+
+	<!-- Ionic 1.1.0 -->
+	<link href="https://code.ionicframework.com/1.1.0/css/ionic.css" rel="stylesheet" />
+	<script src="https://code.ionicframework.com/1.1.0/js/ionic.bundle.js"></script>
+
+	<!-- Vertical Drawer -->
+	<link href="../src/ionic.contrib.drawer.vertical.css" rel="stylesheet" />
+	<script src="../src/ionic.contrib.drawer.vertical.js"></script>
+
+	<!-- Demo Controller -->
+	<script>
+		angular
+		.module('app', ['ionic', 'ionic.contrib.drawer.vertical'])
+		.controller('demo', function($scope, $ionDrawerVerticalDelegate) {
+
+			// Create a list of 50 items
+			$scope.items = [];
+			for (var i = 0; i < 50; i++) {
+				$scope.items.push(i+1);
+			}
+
+			$scope.toggleDrawer = function() {
+				$ionDrawerVerticalDelegate.toggleDrawer();
+			}
+
+			$scope.drawerIs = function(state) {
+				return $ionDrawerVerticalDelegate.getState() == state;
+			}
+
+		});
+	</script>
+
+</head>
+<body ng-app="app" ng-controller="demo">
+	<ion-header-bar class="bar-positive">
+		<h1 class="title">ion-drawer-vertical</h1>
+		<button class="button" ng-click="toggleDrawer()" style="width: 40px; font-weight: 700;">
+			<i class="icon ion-ios-arrow-down" ng-show="drawerIs('opened')"></i>
+			<i class="icon ion-ios-loop" ng-show="!drawerIs('opened') && !drawerIs('closed')"></i>
+			<i class="icon ion-ios-arrow-up" ng-show="drawerIs('closed')"></i>
+		</button>
+	</ion-header-bar>
+
+	<ion-drawer-vertical-wrapper class="has-header" direction="down" state="opened" margin="50">
+		<ion-drawer-vertical-content>
+			<img src="http://lorempixel.com/g/400/200/animals/4/horizontal-giraffe/" alt="Horizontal Giraffe" title="Horizontal Giraffe" />
+		</ion-drawer-vertical-content>
+		<ion-drawer-vertical-handle />
+	</ion-drawer-vertical-wrapper>
+
+	<ion-content scroll="true">
+
+		<ion-list can-swipe="true">
+			<ion-item ng-repeat="item in items">
+				I am {{ item }}
+				<ion-option-button class="button-positive">Foo</ion-option-button>
+				<ion-option-button class="button-info">Bar</ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+
+	<ion-footer-bar class="bar-positive">
+		<h1 class="title">Footer</h1>
+	</ion-footer-bar>
+</body>
+</html>
