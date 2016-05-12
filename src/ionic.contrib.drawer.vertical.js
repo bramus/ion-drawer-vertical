@@ -4,7 +4,7 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $q, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate) {
+	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $q, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate, $interpolate) {
 
 		// We need closure
 		var self = this;
