@@ -35,7 +35,7 @@
 		// Height of the contents
 		// Based on how much we dragged (compared to this height) we well close automatically or fall back to the opened state)
 		var height = $wrapper[0].clientHeight;
-        
+
         // get margin if defined, default is 0 capped at element height
         var margin = (parseInt($attrs.margin) || 0) < $wrapper[0].clientHeight ? (parseInt($attrs.margin) || 0) : $wrapper[0].clientHeight;
 
@@ -51,13 +51,15 @@
                 $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d( 0,' + positivePos + 'px, 0)';
         } else
             $wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0, 0, 0)';
-        
+
 		// Get the handle (if any)
 		var $handle = $element.find('ion-drawer-vertical-handle');
 
 		// Delegate Stuff
+		var delegateGetter = $interpolate($attrs.delegateHandle);
+		var delegateHandle = delegateGetter($scope);
 		var deregisterInstance = $ionDrawerVerticalDelegate._registerInstance(
-			self, $attrs.delegateHandle, function() {
+			self, delegateHandle, function() {
 				return $ionicHistory.isActiveScope($scope);
 			}
 		);
