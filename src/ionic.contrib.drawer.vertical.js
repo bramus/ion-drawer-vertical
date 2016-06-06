@@ -99,7 +99,7 @@
 		// Open the drawer
 		var open = function() {
 			var q = $q.defer();
-			if ((isClosed() || isDoneDragging()) && !isBusyAnimating()) {
+			if ((isClosed() || isDoneDragging()) && !isBusyAnimating()) {
 				$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles
 				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_CLOSE);
@@ -123,7 +123,7 @@
 		var close = function() {
 			var q = $q.defer();
             var y = 0;
-			if ((isOpen() || isDoneDragging()) && !isBusyAnimating()) {
+			if ((isOpen() || isDoneDragging()) && !isBusyAnimating()) {
 				//$wrapper.attr('style', ''); // @note: this little trick will remove the inline styles. REMOVED BECAUSE OF translate3D resetting position
 				state = STATE_ANIMATING;
 				$wrapper.removeClass(STATE_OPEN);
