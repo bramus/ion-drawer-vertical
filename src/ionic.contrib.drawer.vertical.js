@@ -192,7 +192,7 @@
 			}
 
 			// Make drawer follow it all
-			$wrapper.css('transform', 'translate3d(0,' + deltaY + 'px,0)');
+			$wrapper[0].style[ionic.CSS.TRANSFORM] = 'translate3d( 0,' + deltaY + 'px, 0)';
 
 		}
 
