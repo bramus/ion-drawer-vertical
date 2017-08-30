@@ -4,7 +4,9 @@
 
 	angular.module('ionic.contrib.drawer.vertical', ['ionic'])
 
-	.controller('$ionDrawerVertical', function($scope, $element, $attrs, $ionicGesture, $timeout, $q, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate, $interpolate) {
+	.controller('$ionDrawerVertical', [
+		'$scope', '$element', '$attrs', '$ionicGesture', '$timeout', '$q', '$ionicHistory', '$ionDrawerVerticalDelegate', '$ionicScrollDelegate', '$interpolate',
+		function($scope, $element, $attrs, $ionicGesture, $timeout, $q, $ionicHistory, $ionDrawerVerticalDelegate, $ionicScrollDelegate, $interpolate) {
 
 		// We need closure
 		var self = this;
@@ -343,7 +345,7 @@
 
 		}
 
-	});
+	}]);
 
 })();
 
